@@ -72,7 +72,7 @@ def signin():
                     sentlist=eval(tempdata['sentlist'])
     return render_template('signin.html',flag=flag)
 
-@app.route("/home",method=['GET','POST'])
+@app.route("/home",methods=['GET','POST'])
 def home():
     flag=0#FOR INDIVIDUAL ERRORS
     megaflag=0#FOR ERROR DIV

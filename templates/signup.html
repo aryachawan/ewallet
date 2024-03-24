@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
+    <title>Sign-up</title>
+</head>
+<body>
+    <div class="container">
+        {% if flag==0 %}
+        <div class="subcontainer1">
+            <form action="\" method="post">
+                <input type="text" name="flag" value="signuprequest" style="display: none;">
+                <input type="text" name="firstname" placeholder="Enter first name">
+                <input type="text" name="lastname" placeholder="Enter last name">
+                <input type="text" name="username" placeholder="Enter username">
+                <input type="email" name="email" placeholder="Enter email here">
+                <button type="submit">Submit</button>
+            </form>
+            <h2>Already have an account ?</h2>
+            <form action="\signin" method="post">
+                <input type="text" name="flag" value="viewsignin" style="display: none;">
+                <button type="submit">SignIn</button>
+            </form>
+        </div>
+        {% elif flag == 3 %}
+        <div class="subconatiner2">
+            <form action="\" method="post">
+                <input type="text" name="flag" value="createpinrequest" style="display: none;">
+                <label>Create Pin:</label>
+                <input type="text" name="pin" placeholder="Enter 5 digit pin">
+                <label>Confirm Pin:</label>
+                <input type="text" name="confirmpin" placeholder="Enter 5 digit pin">
+                <input type="text" name="bal" placeholder="Enter balance here">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <!-- ERROR SECTION BELOW -->
+        {% elif flag==1 %}
+        <h1>Error encountered</h1>
+        <h2>Username already taken or too short</h2>
+        <form action="\" method="post">
+            <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+            <button>Try again</button>
+        </form>
+        {% elif flag==2 %}
+        <h1>Error encountered</h1>
+        <h2>Invalid email input or email id already in use</h2>
+        <form action="\" method="post">
+            <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+            <button>Try again</button>
+        </form>
+        {% elif flag==69 %}
+        <h1>Error encountered</h1>
+        <h2>Pins dont match or invalid pin input</h2>
+        <h2>Also check for balance input it shouldnt contain alphabets or alphanumeric characters</h2>
+        <form action="\" method="post">
+            <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+            <button>Try again</button>
+        </form>
+        {% elif flag==29 %}
+        <h1>Account created successfully</h1>
+        <h2>Name: {{data['username']}}</h2>
+        <h3>To dashboard:</h3>
+        <form action="\home" method="post">
+            <input type="text" name="flag" value="viewhome" style="display: none;">
+            <button>Continue</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <title>Sign-up</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="container1">
+            <img src="/static/bg2.jpg">
+            <div class="container2">
+                {% if flag==0 %}
+                <div class="subcontainer1">
+                    <p id="one">Lets Get Started !!!</p>
+                    <p id="two">Create account:</p>
+                    <form action="\" method="post">
+                        <input type="text" name="flag" value="signuprequest" style="display: none;">
+                        <input type="text" name="firstname" placeholder="Enter first name">
+                        <input type="text" name="lastname" placeholder="Enter last name">
+                        <input type="text" name="username" placeholder="Enter username">
+                        <input type="email" name="email" placeholder="Enter email here">
+                        <button type="submit">Submit</button>
+                    </form>
+                    <h3>Already have an account ?</h3>
+                    <form action="\signin" method="post">
+                        <input type="text" name="flag" value="viewsignin" style="display: none;">
+                        <button type="submit">SignIn</button>
+                    </form>
+                </div>
+                {% elif flag == 3 %}
+                <div class="subcontainer2">
+                    <form action="\" method="post">
+                        <input type="text" name="flag" value="createpinrequest" style="display: none;">
+                        <label>Create Pin:</label>
+                        <input type="text" name="pin" placeholder="Enter 4 digit pin">
+                        <label>Confirm Pin:</label>
+                        <input type="text" name="confirmpin" placeholder="Enter 4 digit pin">
+                        <label>Balance:</label>
+                        <input type="text" name="bal" placeholder="Enter balance here">
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                <!-- ERROR SECTION BELOW -->
+                {% elif flag==1 %}
+                <div class="messagediv">
+                    <h1>Error encountered</h1>
+                    <h2>Username already taken or too short</h2>
+                    <form action="\" method="post">
+                        <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+                        <button>Try again</button>
+                    </form>
+                </div>
+                {% elif flag==2 %}
+                <div class="messagediv">
+                    <h1>Error encountered</h1>
+                    <h2>Invalid email input or email id already in use</h2>
+                    <form action="\" method="post">
+                        <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+                        <button>Try again</button>
+                    </form>
+                </div>
+                {% elif flag==69 %}
+                <div class="messagediv">
+                    <h1>Error encountered</h1>
+                    <h2>Pins dont match or invalid pin input</h2>
+                    <h2>Also check for balance input it shouldnt contain alphabets or alphanumeric characters</h2>
+                    <form action="\" method="post">
+                        <input type="text" name="flag" value="viewsignuprequest" style="display: none;">
+                        <button>Try again</button>
+                    </form>
+                </div>
+                {% elif flag==29 %}
+                <div class="messagediv">
+                    <h1>Account created successfully</h1>
+                    <h2>Username: {{data['username']}}</h2>
+                    <h2>Name: {{data['firstname']}} {{data['lastname']}}</h2>
+                    <h2>Email: {{data['email']}}</h2>
+                    <h2>To dashboard:</h2>
+                    <form action="\home" method="post">
+                        <input type="text" name="flag" value="viewhome" style="display: none;">
+                        <button>Continue</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
+    <title>Sign-In</title>
+</head>
+<body>
+    <div class="container">
+        {% if flag==0 %}
+        <div class="subcontainer1">
+            <form action="\signin" method="post">
+                <h3>Sign in using email or username</h3>
+                <input type="text" name="flag" value="signinrequest" style="display: none;">
+                <input type="text" name="username" placeholder="Enter username">
+                <input type="email" name="email" placeholder="Enter email">
+                <input type="text" name="pin" placeholder="Enter pin">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        {% elif flag==2 %}
+        <h1>SignIn failed</h1>
+        <h2>Incorrect username or password</h2>
+        {% elif flag==1 %}
+        <h1>User Not found</h1>
+        {% elif flag==3 %}
+        <h1>SignIn successfull</h1>
+        <form action="\home" method="post">
+            <input type="text" name="flag" value="viewhome" style="display: none;">
+            <button>Continue</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

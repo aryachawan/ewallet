@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<style>
+    *,
+    *::after,
+    *::before {
+        box-sizing: border-box;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 200ms ease-in-out;
+        border: 1px solid black;
+        border-radius: 10px;
+        z-index: 10;
+        background-color: white;
+        width: 500px;
+        max-width: 80%;
+    }
+
+    .modal.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-header,
+    .errorbox-header {
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid black;
+    }
+
+    .modal-header .title,
+    .errorbox-header .title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .modal-header .close-button,
+    .errorbox-header .close-button {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .modal-body,
+    .errorbox-body {
+        padding: 10px 15px;
+    }
+
+    #overlay {
+        position: fixed;
+        opacity: 0;
+        transition: 200ms ease-in-out;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .5);
+        pointer-events: none;
+    }
+
+    #overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .modal-body form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-body form input {
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    .errorbox {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transition: 200ms ease-in-out;
+        border: 1px solid black;
+        border-radius: 10px;
+        z-index: 10;
+        background-color: white;
+        width: 500px;
+        max-width: 80%;
+    }
+
+    body {
+        font-family: 'Poppins';
+    }
+
+    .container1 {
+        display: flex;
+        justify-content: space-between;
+        padding: auto;
+        background-color: black;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .container1 p {
+        font-size: 1.5rem;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        color: black;
+    }
+
+    #name {
+        background-color: black;
+        color: white;
+    }
+
+    #balance {
+        margin-right: 20px;
+    }
+
+    #paybtn {
+        margin-top: 10px;
+        width: 21rem;
+        height: 3rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px 1.5px grey;
+    }
+    .container2{
+        margin-top: 20px; margin-bottom: 20px;
+        border:2px solid black;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 5px 5px 5px 3px grey;
+    }
+    .container2 h1{
+        margin: 0;
+    }
+    .container2 p{
+        font-size: 1.2rem;
+    }
+</style>
+
+<body>
+    <div class="container1">
+        <p id="name">{{data['username']}}</p>
+        <p id="balance">Balance: {{data['balance']}} Rs</p>
+    </div>
+    <center>
+    <button data-modal-target="#modal" id="paybtn">Pay</button>
+    </center>
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="title">Make Payment</div>
+            <button data-close-button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form action="\home" method="post">
+                <input type="text" name="flag" value="payrequest" style="display: none;">
+                <input type="text" name="username" placeholder="Send to [enter username]">
+                <input type="text" name="amount" placeholder="enter amount">
+                <input type="text" name="pin" placeholder="enter pin">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div id="overlay"></div>
+    <div class="container2">
+        <h1>Quick Send</h1>
+        {% for i in sentlist %}
+        <p>{{i}}</p>
+        {% endfor %}
+    </div>
+    {% if megaflag==1 %}
+    <div class="errorbox">
+        <div class="errorbox-header">
+            <div class="title">Payment failed</div>
+            <form action="\home" method="post">
+                <input type="test" name="flag" value="removeerrorboxrequest" style="display: none;">
+                <button class="close-button">&times;</button>
+            </form>
+        </div>
+        <div class="errorbox-body">
+            {% if flag==1 %}
+            <h1>Error occured:</h1>
+            <h2>The account to which you were trying to transfer funds doesnt exits.</h2>
+            <h2>Make sure you input username correctly</h2>
+            {% elif flag==2 %}
+            <h1>Error occured:</h1>
+            <h2>Amount entered is less than or equal to zero cannot transfer funds</h2>
+            {% elif flag==3 %}
+            <h1>Error occured:</h1>
+            <h2>Insufficient balance. Check amount before entering</h2>
+            {% elif flag==4 %}
+            <h1>Error occured:</h1>
+            <h2>Incorrect pin entered, enter correct pin to transfer funds.</h2>
+            <h2></h2>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    <form action="/" method="post">
+        <input type="text" name="flag" value="signoutrequest" style="display: none;">
+        <button type="submit">Sign-Out</button>
+    </form>
+</body>
+<script>
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
+
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.querySelector(button.dataset.modalTarget)
+            openModal(modal)
+        })
+    })
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+            closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
+    function closeModal(modal) {
+        if (modal == null) return
+        modal.classList.remove('active')
+        overlay.classList.remove('active')
+    }
+</script>
+
+</html>

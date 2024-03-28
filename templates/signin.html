@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <title>Sign-In</title>
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins';
+    }
+
+    .main {
+        position: fixed;
+        top: 4%;
+        left: 20%;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 3px grey;
+    }
+
+    .container img {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .container {
+        border-radius: 5px;
+        display: flex;
+        height: 50rem;
+    }
+
+    .subcontainer1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        border-radius: 0 10px 10px 0;
+        border-right: 1px solid black;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .subcontainer1 form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .subcontainer1 form input {
+        width: 20rem;
+        height: 3rem;
+        margin-bottom: 10px;
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        border-bottom: 1px solid black;
+    }
+
+    .subcontainer1 form input[type='text'],
+    .subcontainer1 form input[type='email'],
+    .subcontainer2 form input[type='text'],
+    .subcontainer1 form input[type='email'] {
+        font-size: 1.25rem;
+        background-color: transparent;
+    }
+
+    .subcontainer1 form button {
+        margin-top: 10px;
+        width: 21rem;
+        height: 3rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    .subcontainer1 form label {
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+
+    .subcontainer1 #one {
+        font-size: 2.7rem;
+        margin-bottom: 0;
+    }
+    .main .messagediv{
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+    }
+    .messagediv h1{
+        margin-bottom: 5px;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="container">
+            <img src="/static/bg2.jpg">
+            {% if flag==0 %}
+            <div class="subcontainer1">
+                <form action="\signin" method="post">
+                    <p id='one'>Sign-In</p>
+                    <label>Sign in using email or username</label>
+                    <input type="text" name="flag" value="signinrequest" style="display: none;">
+                    <input type="text" name="username" placeholder="Enter username">
+                    <input type="email" name="email" placeholder="Enter email">
+                    <input type="text" name="password" placeholder="Enter account password">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            {% elif flag==2 %}
+            <div class="messagediv" style="text-align: left;">
+                <h1>SignIn failed</h1>
+                <h2>Incorrect username or password</h2>
+            </div>
+            {% elif flag==1 %}
+            <div class="messagediv" style="text-align: left;">
+                <h1>SignIn failed</h1>
+                <h2>User not found</h2>
+                <h2>No such user exists</h2>
+            </div>
+            {% elif flag==3 %}
+            <div class="messagediv" style="text-align: left;">
+                <h1>SignIn successfull</h1>
+                <form action="\home" method="post">
+                    <input type="text" name="flag" value="viewhome" style="display: none;">
+                    <button>Continue</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

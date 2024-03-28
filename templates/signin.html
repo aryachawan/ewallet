@@ -68,7 +68,7 @@
         background-color: transparent;
     }
 
-    .subcontainer1 form button {
+    .subcontainer1 form button,.messagediv button {
         margin-top: 10px;
         width: 21rem;
         height: 3rem;
@@ -122,12 +122,20 @@
             <div class="messagediv" style="text-align: left;">
                 <h1>SignIn failed</h1>
                 <h2>Incorrect username or password</h2>
+                <form action="\siginin" method="post">
+                    <input type="text" name="flag" value="viewsignin" style="display: none;">
+                    <button>Try again</button>
+                </form>
             </div>
             {% elif flag==1 %}
             <div class="messagediv" style="text-align: left;">
                 <h1>SignIn failed</h1>
                 <h2>User not found</h2>
                 <h2>No such user exists</h2>
+                <form action="\signin" method="post">
+                    <input type="text" name="flag" value="viewsignin" style="display: none;">
+                    <button>Try again</button>
+                </form>
             </div>
             {% elif flag==3 %}
             <div class="messagediv" style="text-align: left;">
